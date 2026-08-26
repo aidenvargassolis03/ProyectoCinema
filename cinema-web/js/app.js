@@ -38,7 +38,7 @@ function renderMovies(movies) {
 }
 
 function renderGenres(genres) {
-    //genreContainer.innerHTML = "";
+    genreContainer.innerHTML =  '<a href="#">Todos</a>';
 
     genres.forEach(genre => {
 
@@ -68,16 +68,20 @@ function filterByGenre(movies) {
     const genreButtons = document.querySelectorAll(".aside-menu a");
 
     genreButtons.forEach((genreButton) => {
-        genreButton.addEventListener("click", () => {
-            //console.log(movies);
+        genreButton.addEventListener("click", (event) => {
+            event.preventDefault();
+
+            const selectGenre = genreButton.innerHTML;
+
             const filteredMovies = movies.filter(movie => {
-                if (genreButton.innerHTML == "Todos") {
-                    return movie.genre
-                } else {
-                    return movie.genre === genreButton.innerHTML;
-                }
-            })
+                if (selectGenre == "Todos") {
+                    return true;
+                } 
+                    return movie.genre.includes(selectGenre);
+                
+            });
             renderMovies(filteredMovies);
+            addButtonAction();
         })
     })
 }
