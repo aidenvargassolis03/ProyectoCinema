@@ -55,14 +55,6 @@ function addButtonAction() {
 
     $(".movie-card__button").click(function () { $(".site-footer").css("background", "white"); })
 
-    /*const movieButtons = document.querySelectorAll(".movie-card__button");
-
-    movieButtons.forEach((button) => {
-        button.addEventListener("click", () => {
-            console.log(button.dataset.movieId);
-        })
-    })*/
-
 }
 
 function filterByGenre(movies) {
@@ -82,6 +74,52 @@ function filterByGenre(movies) {
     })
 }
 
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function renderExchangeRate() {
+
+    $("#dolarChange").show();
+    //$("#dolarChange").hide();
+
+    const estadoTipoCambio = $("#dolarChange h2");
+    const listaTipoCambio = $("#dolarChange ul");
+
+    estadoTipoCambio.text("Cargando...");
+    listaTipoCambio.empty();// .html = "";    
+
+    try {
+        const response = await fetch("https://api.exchangerate-api.com/v4/latest/USD");
+
+        if (!response.ok) throw new Error(`Error Http: ${response.status}`);
+
+        const data = await response.json();
+
+        const monedas = ["USD", "BRL", "CRC", "EUR", "JPY"];
+
+        //monedas.forEach(moneda => {
+        for (const moneda of monedas) {
+
+            if (data.rates[moneda]) {
+                const li = $("<li>"); //document.createElement("li");
+                li.css("margin-bottom", "5px");
+
+                li.html(`<strong>${moneda}:</strong> ${data.rates[moneda]}`);
+                listaTipoCambio.append(li);
+
+                //await sleep(2000)
+            }
+        }
+
+        estadoTipoCambio.text("Tipo de cambio actualizado");
+
+    } catch (error) {
+        console.error(error);
+        estadoTipoCambio.text("Ocurrió un error al cargar el tipo de cambio.");
+    }
+}
+
 async function init() {
     const data = await getData();
     //console.log(data);   
@@ -89,20 +127,11 @@ async function init() {
     renderGenres(data.genres);
 
     addButtonAction();
-    filterByGenre(data.movies)
+    filterByGenre(data.movies);
+
+    renderExchangeRate();
 
     $("#year").text(new Date().getFullYear());
-
-    /*const yearEl = document.getElementById('year');
-    if (yearEl) yearEl.textContent = new Date().getFullYear();*/
-
-    //const carts = document.getElementsByClassName("movie-card__content");
-    //const genre_button = document.querySelector(".aside-menu a");
-    //const genre_button = document.querySelector(".genreClass:nth-child(2)");
-    //document.getElementById("genreContainer");
-    //document.getElementsByClassName("genreClass");//todas las conincidencias
-
-    //console.log(genre_button);
 
 }
 
