@@ -53,14 +53,15 @@ function renderGenres(genres) {
 
 function addButtonAction() {
 
-    const movieButtons = document.querySelectorAll(".movie-card__button");
+    $(".movie-card__button").click(function () { $(".site-footer").css("background", "white"); })
+
+    /*const movieButtons = document.querySelectorAll(".movie-card__button");
 
     movieButtons.forEach((button) => {
         button.addEventListener("click", () => {
             console.log(button.dataset.movieId);
         })
-
-    })
+    })*/
 
 }
 
@@ -95,11 +96,12 @@ async function init() {
     addButtonAction();
     filterByGenre(data.movies)
 
-    const yearEl = document.getElementById('year');
-    if (yearEl) yearEl.textContent = new Date().getFullYear();
+    $("#year").text(new Date().getFullYear());
+
+    /*const yearEl = document.getElementById('year');
+    if (yearEl) yearEl.textContent = new Date().getFullYear();*/
 
     //const carts = document.getElementsByClassName("movie-card__content");
-
     //const genre_button = document.querySelector(".aside-menu a");
     //const genre_button = document.querySelector(".genreClass:nth-child(2)");
     //document.getElementById("genreContainer");
@@ -110,3 +112,6 @@ async function init() {
 }
 
 document.addEventListener('DOMContentLoaded', init)
+
+
+//$(document).ready(init)
