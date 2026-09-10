@@ -1,5 +1,5 @@
-const movieContainer = document.getElementById("movieContainer");
-const genreContainer = document.getElementById("genreContainer");
+const movieContainer = $("#movieContainer");
+const genreContainer = $("#genreContainer");
 
 async function getData() {
     const response = await fetch('data/movies.json');
@@ -10,17 +10,17 @@ async function getData() {
 
 function renderMovies(movies) {
 
-    movieContainer.innerHTML = '';
+    movieContainer.empty();
 
     movies.forEach(movie => {
 
-        const article = document.createElement('article');
-        article.classList.add("movie-card");
+        const article = $("<article>");
+        article.addClass("movie-card");
 
         // let texto = "<img src= " + movie.poster + " alt=" + movie.title + " class='movie-card__image'>"
 
-        article.innerHTML =
-            `<img src="${movie.poster}" alt="${movie.title}" class="movie-card__image">
+       article.html(`
+    <img src="${movie.poster}" alt="${movie.title}" class="movie-card__image">
             <div class="movie-card__content">
                 <h4 class="movie-card__title">${movie.title}</h4>
                 <p class="movie-card__description">${movie.shortDescription}</p>
@@ -29,23 +29,24 @@ function renderMovies(movies) {
                     <span class="movie-card__genre">${movie.genre}</span>                    
                 </div>
             <button class="movie-card__button" data-movie-id="${movie.id}">Ver detalles</button>
-        </div>`;
+        </div>
+`);
 
-        movieContainer.appendChild(article);
+        movieContainer.append(article);
         /*console.log(`Renderizando película: ${movie.title}`); */
     });
 
 }
 
 function renderGenres(genres) {
-    genreContainer.innerHTML =  '<a href="#">Todos</a>';
+    genreContainer.html('<a href="#">Todos</a>');  
 
     genres.forEach(genre => {
 
-        const link = document.createElement("a");
-        link.setAttribute("href", "#");
+        const link = $("<a>");
+        link.attr("href", "#");
 
-        link.innerHTML = genre;
+        link.html(genre);
 
         genreContainer.append(link);
     });
@@ -66,13 +67,13 @@ function addButtonAction() {
 }
 
 function filterByGenre(movies) {
-    const genreButtons = document.querySelectorAll(".aside-menu a");
+    const genreButtons = $(".aside-menu a");
 
-    genreButtons.forEach((genreButton) => {
-        genreButton.addEventListener("click", (event) => {
+    genreButtons.each(function () {
+        $(this).on("click", function (event) {
             event.preventDefault();
 
-            const selectGenre = genreButton.innerHTML;
+            const selectGenre = $(this).html();
 
             const filteredMovies = movies.filter(movie => {
                 if (selectGenre == "Todos") {
@@ -111,7 +112,7 @@ async function init() {
 
 }
 
-document.addEventListener('DOMContentLoaded', init)
+//document.addEventListener('DOMContentLoaded', init)
 
 
-//$(document).ready(init)
+$(document).ready(init)
