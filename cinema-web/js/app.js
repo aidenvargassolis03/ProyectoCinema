@@ -51,9 +51,27 @@ function renderGenres(genres) {
     });
 }
 
-function addButtonAction() {
+function addButtonAction(movies) {
 
-    $(".movie-card__button").click(function () { $(".site-footer").css("background", "white"); })
+    const movieDetails = document.getElementById("movieDetails");
+    let movieDetailsContent = document.getElementById("movieDetailContent");
+
+    const buttons = document.querySelectorAll(".movie-card__button");
+
+    buttons.forEach((button) => {
+        button.addEventListener("click", () => {
+            let movie = movies.find(m => m.id == button.dataset.movieId);
+
+            if (movie) {
+                movieDetails.classList.add("show");
+                movieDetailsContent.textContent = JSON.stringify(movie, ["title", "description", "genre", "duration"], 2);
+
+                const cardContentRect = button.parentElement.getBoundingClientRect();
+                movieDetails.style.left = `${cardContentRect.left + 12}px`;
+                movieDetails.style.top = `${cardContentRect.top - 60}px`;
+            }
+        })
+    })
 
 }
 
@@ -122,11 +140,12 @@ async function renderExchangeRate() {
 
 async function init() {
     const data = await getData();
+
     //console.log(data);   
     renderMovies(data.movies);
     renderGenres(data.genres);
 
-    addButtonAction();
+    addButtonAction(data.movies);
     filterByGenre(data.movies);
 
     renderExchangeRate();
