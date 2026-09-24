@@ -8,6 +8,30 @@ async function getData() {
     return data;
 }
 
+async function getGenres() {
+    try {
+        const response = await fetch('https://proyectocinemaapi.onrender.com/genres');
+        const genres = await response.json();
+
+        return genres;
+
+    } catch (error) {
+        alert("error type: " + error)
+    }
+}
+
+async function getMovies() {
+    try {
+        const response = await fetch('https://proyectocinemaapi.onrender.com/movies');
+        const movies = await response.json();
+
+        return movies;
+
+    } catch (error) {
+        alert("error type: " + error);
+    }
+}
+
 function renderMovies(movies) {
 
     movieContainer.innerHTML = '';
@@ -88,6 +112,7 @@ function filterByGenre(movies) {
                 }
             })
             renderMovies(filteredMovies);
+            addButtonAction(filteredMovies);
         })
     })
 }
@@ -140,13 +165,16 @@ async function renderExchangeRate() {
 
 async function init() {
     const data = await getData();
+    const genres = await getGenres();
+    const movies = await getMovies();
+
 
     //console.log(data);   
-    renderMovies(data.movies);
-    renderGenres(data.genres);
+    renderMovies(movies);
+    renderGenres(genres);
 
-    addButtonAction(data.movies);
-    filterByGenre(data.movies);
+    addButtonAction(movies);
+    filterByGenre(movies);
 
     renderExchangeRate();
 
