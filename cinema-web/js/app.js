@@ -8,6 +8,30 @@ async function getData() {
     return data;
 }
 
+async function getGenres() {
+    try {
+        const response = await fetch('https://proyectocinemaapi.onrender.com/genres');
+        const genres = await response.json();
+
+        return genres;
+
+    } catch (error) {
+        alert("error type: " + error);
+    }
+}
+
+async function getMovies() {
+    try {
+        const response = await fetch('https://proyectocinemaapi.onrender.com/movies');
+        const movies = await response.json();
+
+        return movies;
+
+    } catch (error) {
+        alert("error type: " + error);
+    }
+}
+
 function renderMovies(movies) {
 
     movieContainer.empty();
@@ -17,10 +41,8 @@ function renderMovies(movies) {
         const article = $("<article>");
         article.addClass("movie-card");
 
-        // let texto = "<img src= " + movie.poster + " alt=" + movie.title + " class='movie-card__image'>"
-
-       article.html(`
-    <img src="${movie.poster}" alt="${movie.title}" class="movie-card__image">
+        article.html(`
+            <img src="${movie.poster}" alt="${movie.title}" class="movie-card__image">
             <div class="movie-card__content">
                 <h4 class="movie-card__title">${movie.title}</h4>
                 <p class="movie-card__description">${movie.shortDescription}</p>
@@ -28,91 +50,163 @@ function renderMovies(movies) {
                     <span class="movie-card__duration">${movie.duration} min</span>
                     <span class="movie-card__genre">${movie.genre}</span>                    
                 </div>
-            <button class="movie-card__button" data-movie-id="${movie.id}">Ver detalles</button>
-        </div>
-`);
+                <button class="movie-card__button" data-movie-id="${movie.id}">Ver detalles</button>
+            </div>
+        `);
 
         movieContainer.append(article);
-        /*console.log(`Renderizando película: ${movie.title}`); */
     });
-
 }
 
 function renderGenres(genres) {
-    genreContainer.html('<a href="#">Todos</a>');  
+
+    genreContainer.html('<a href="#">Todos</a>');
 
     genres.forEach(genre => {
 
         const link = $("<a>");
         link.attr("href", "#");
-
         link.html(genre);
 
         genreContainer.append(link);
     });
 }
 
-function addButtonAction() {
+function addButtonAction(movies) {
 
-    $(".movie-card__button").click(function () { $(".site-footer").css("background", "white"); })
+    const movieDetails = document.getElementById("movieDetails");
+    const movieDetailsContent = document.getElementById("movieDetailContent");
 
-    /*const movieButtons = document.querySelectorAll(".movie-card__button");
+    const buttons = $(".movie-card__button");
 
-    movieButtons.forEach((button) => {
-        button.addEventListener("click", () => {
-            console.log(button.dataset.movieId);
-        })
-    })*/
+    buttons.each(function () {
 
+        $(this).on("click", function () {
+
+            const movieId = $(this).attr("data-movie-id");
+
+            const movie = movies.find(function (movie) {
+                return movie.id == movieId;
+            });
+
+            if (movie) {
+
+                movieDetails.classList.add("show");
+
+                movieDetailsContent.textContent = JSON.stringify(
+                    movie,
+                    ["title", "description", "genre", "duration"],
+                    2
+                );
+
+                const cardContentRect = this.parentElement.getBoundingClientRect();
+
+                movieDetails.style.left = `${cardContentRect.left + 12}px`;
+                movieDetails.style.top = `${cardContentRect.top - 60}px`;
+            }
+        });
+    });
 }
 
 function filterByGenre(movies) {
+
     const genreButtons = $(".aside-menu a");
 
     genreButtons.each(function () {
+
         $(this).on("click", function (event) {
+
             event.preventDefault();
 
             const selectGenre = $(this).html();
 
-            const filteredMovies = movies.filter(movie => {
+            const filteredMovies = movies.filter(function (movie) {
+
                 if (selectGenre == "Todos") {
                     return true;
-                } 
-                    return movie.genre.includes(selectGenre);
-                
+                }
+
+                return movie.genre.includes(selectGenre);
             });
+
             renderMovies(filteredMovies);
-            addButtonAction();
-        })
-    })
+
+            addButtonAction(movies);
+        });
+    });
+}
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function renderExchangeRate() {
+
+    $("#dolarChange").show();
+
+    const estadoTipoCambio = $("#dolarChange h2");
+    const listaTipoCambio = $("#dolarChange ul");
+
+    estadoTipoCambio.text("Cargando...");
+    listaTipoCambio.empty();
+
+    try {
+
+        const response = await fetch(
+            "https://api.exchangerate-api.com/v4/latest/USD"
+        );
+
+        if (!response.ok) {
+            throw new Error(`Error Http: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        const monedas = ["USD", "BRL", "CRC", "EUR", "JPY"];
+
+        for (const moneda of monedas) {
+
+            if (data.rates[moneda]) {
+
+                const li = $("<li>");
+
+                li.css("margin-bottom", "5px");
+
+                li.html(
+                    `<strong>${moneda}:</strong> ${data.rates[moneda]}`
+                );
+
+                listaTipoCambio.append(li);
+            }
+        }
+
+        estadoTipoCambio.text("Tipo de cambio actualizado");
+
+    } catch (error) {
+
+        console.error(error);
+
+        estadoTipoCambio.text(
+            "Ocurrió un error al cargar el tipo de cambio."
+        );
+    }
 }
 
 async function init() {
-    const data = await getData();
-    //console.log(data);   
-    renderMovies(data.movies);
-    renderGenres(data.genres);
 
-    addButtonAction();
-    filterByGenre(data.movies)
+    const data = await getData();
+    const genres = await getGenres();
+    const movies = await getMovies();
+
+    renderMovies(movies);
+    renderGenres(genres);
+
+    addButtonAction(movies);
+    filterByGenre(movies);
+
+    renderExchangeRate();
 
     $("#year").text(new Date().getFullYear());
-
-    /*const yearEl = document.getElementById('year');
-    if (yearEl) yearEl.textContent = new Date().getFullYear();*/
-
-    //const carts = document.getElementsByClassName("movie-card__content");
-    //const genre_button = document.querySelector(".aside-menu a");
-    //const genre_button = document.querySelector(".genreClass:nth-child(2)");
-    //document.getElementById("genreContainer");
-    //document.getElementsByClassName("genreClass");//todas las conincidencias
-
-    //console.log(genre_button);
-
 }
 
-//document.addEventListener('DOMContentLoaded', init)
-
-
-$(document).ready(init)
+$(document).ready(init);

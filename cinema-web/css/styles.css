@@ -227,6 +227,42 @@ main {
     font-size: 0.9rem;
 }
 
+/*Detalles de las peliculas*/
+#movieDetails {
+    display: none;
+    width: 0;
+    height: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    text-align: center;
+    padding: 12px;
+    background-color: var(--muted);
+    border-radius: var(--radius);
+    transform: all 0.5 ease;
+}
+
+#movieDetails.show {
+    display: block;
+    width: 20%;
+    height: auto;
+    max-height: 200px;
+    z-index: 1000;
+}
+
+#movieDetails h2 {
+    margin-top: 0;
+    font-size: 1.5rem;
+}
+
+#movieDetails pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    background-color: var(--surface);
+    text-align: left;
+    color: var(--over);
+}
+
 /* Responsive tweaks */
 @media (max-width:720px) {
     .hero-title {
