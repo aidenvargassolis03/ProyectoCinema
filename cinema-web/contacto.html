@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Contacto | Cinema Web</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/contacto.css">
+</head>
+
+<body>
+    <header class="site-header">
+        <div class="container header-inner">
+            <h1 class="site-logo">Cinema Web</h1>
+            <nav class="main-nav" aria-label="Navegación principal">
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="index.html#cartelera">Cartelera</a></li>
+                    <li><a href="contacto.html" aria-current="page">Contacto</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="cartelera container" aria-labelledby="contact-title">
+            <h3 id="contact-title">Contacto</h3>
+
+            <form class="contact-form">
+                <div>
+                    <p id="errorNombre" class="error"></p>
+                    <label for="name">Nombre:</label>
+                    <input type="text" id="name" name="name" minlength="4" maxlength="40">
+                </div>
+                <div>
+                     <p id="errorEdad" class="error"></p>
+                    <label for="age">Edad:</label>
+                    <input type="number" id="age" name="age" min="5" max="100">
+                </div>
+                <div>
+                     <p id="errorEmail" class="error"></p>
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email">
+                </div>
+                <div>
+                     <p id="errorMensaje" class="error"></p>
+                    <label for="message">Mensaje:</label>
+                    <textarea id="message" name="message" rows="5"></textarea>
+                </div>
+                <button type="submit">Enviar</button>
+            </form>
+        </section>
+    </main>
+    
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <p>&copy; Cinema Web. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+    <script src="../validacion.js" defer></script>
+</body>
+
+</html>

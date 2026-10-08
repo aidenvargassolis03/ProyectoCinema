@@ -1,0 +1,81 @@
+.contact-form {
+    display: grid;
+    gap: 20px;
+    width: min(100%, 680px);
+    margin: 0 auto;
+    padding: 28px;
+    background: var(--surface);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.24);
+}
+
+.contact-form > div {
+    display: grid;
+    gap: 8px;
+}
+
+.contact-form label {
+    color: #e6eef6;
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+.contact-form input,
+.contact-form textarea {
+    width: 100%;
+    padding: 12px 14px;
+    color: #e6eef6;
+    font: inherit;
+    background: var(--card-bg);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 6px;
+    transition: border-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.contact-form textarea {
+    min-height: 150px;
+    resize: vertical;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(229, 57, 53, 0.2);
+}
+
+.contact-form button {
+    justify-self: start;
+    padding: 10px 20px;
+    color: #fff;
+    font: inherit;
+    font-weight: 700;
+    background: var(--accent);
+    border: 0;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.18s ease, transform 0.18s ease;
+}
+
+.contact-form button:hover {
+    background: #c62828;
+    transform: translateY(-1px);
+}
+
+.contact-form button:focus-visible {
+    outline: 3px solid rgba(229, 57, 53, 0.45);
+    outline-offset: 3px;
+}
+
+.error {
+    margin: 0;
+    color: #ff8a80;
+    font-size: 0.875rem;
+}
+
+@media (max-width: 720px) {
+    .contact-form {
+        padding: 20px;
+    }
+}
