@@ -42,7 +42,7 @@ function renderMovies(movies) {
         article.addClass("movie-card");
 
         article.html(`
-            <img src="${movie.poster}" alt="${movie.title}" class="movie-card__image">
+            <img src="${movie.title === "Spider-Man: Un nuevo universo" ? "images/poster-spiderman.jpg" : movie.poster}" alt="${movie.title}" class="movie-card__image">
             <div class="movie-card__content">
                 <h4 class="movie-card__title">${movie.title}</h4>
                 <p class="movie-card__description">${movie.shortDescription}</p>
@@ -77,6 +77,18 @@ function addButtonAction(movies) {
     const movieDetails = document.getElementById("movieDetails");
     const movieDetailsContent = document.getElementById("movieDetailContent");
 
+        $("#movieDetails button").remove();
+
+    const closeButton = $("<button>");
+    closeButton.text("x");
+    closeButton.attr("arial-label", "Cerrar");
+
+    closeButton.on("click", function () {
+        $("#movieDetails").removeClass("show");
+    });
+
+    $("#movieDetails").prepend(closeButton);
+
     const buttons = $(".movie-card__button");
 
     buttons.each(function () {
@@ -93,16 +105,8 @@ function addButtonAction(movies) {
 
                 movieDetails.classList.add("show");
 
-                movieDetailsContent.textContent = JSON.stringify(
-                    movie,
-                    ["title", "description", "genre", "duration"],
-                    2
-                );
+                movieDetailsContent.textContent = JSON.stringify(movie, null, 2);
 
-                const cardContentRect = this.parentElement.getBoundingClientRect();
-
-                movieDetails.style.left = `${cardContentRect.left + 12}px`;
-                movieDetails.style.top = `${cardContentRect.top - 60}px`;
             }
         });
     });
