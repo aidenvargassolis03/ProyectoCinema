@@ -1,13 +1,6 @@
 const movieContainer = $("#movieContainer");
 const genreContainer = $("#genreContainer");
 
-async function getData() {
-    const response = await fetch('data/movies.json');
-    const data = await response.json();
-
-    return data;
-}
-
 async function getGenres() {
     try {
         const response = await fetch('https://proyectocinemaapi.onrender.com/genres');
@@ -198,7 +191,6 @@ async function renderExchangeRate() {
 
 async function init() {
 
-    const data = await getData();
     const genres = await getGenres();
     const movies = await getMovies();
 
