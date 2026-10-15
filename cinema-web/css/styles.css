@@ -338,3 +338,302 @@ main {
         height: 180px
     }
 }
+
+/* Icono del carrito en la navegación */
+.cart-toggle {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+
+    width: 38px;
+    height: 38px;
+    margin: 0;
+    padding: 0;
+    line-height: 1;
+
+    background: transparent;
+    color: white;
+    border: none;
+    border-radius: 50%;
+
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.cart-icon {
+    display: block;
+    width: 18px;
+    height: 18px;
+}
+
+.cart-toggle:hover {
+    background: rgba(255, 255, 255, 0.12);
+}
+
+/* Contador pequeño en la esquina */
+#cartCount {
+    position: absolute;
+    top: 0;
+    right: -2px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 17px;
+    height: 17px;
+    padding: 0 3px;
+    box-sizing: border-box;
+
+    background: #f97316;
+    color: white;
+    border: 2px solid #172d50;
+    border-radius: 50%;
+
+    font-size: 10px;
+    font-weight: bold;
+    line-height: 1;
+}
+
+/* Panel del carrito*/
+
+.cart-panel {
+    width: min(520px, calc(100% - 32px));
+    height: fit-content;
+    margin: 30px auto;
+    padding: 24px;
+    box-sizing: border-box;
+    align-self: flex-start;
+
+    background: var(--surface);
+    color: var(--over);
+
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 16px;
+
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.22);
+}
+
+.cart-panel h3 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+}
+
+/* Alinear el carrito con los enlaces del menú */
+.main-nav #list {
+    display: flex;
+    align-items: center;
+}
+
+.main-nav #list li {
+    display: flex;
+    align-items: center;
+}
+
+.main-nav #list li:last-child {
+    align-self: center;
+}
+
+.main-nav .cart-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+    transform: translateY(0);
+}
+
+
+/* Botón para comprar tiquetes */
+.buy-ticket-button {
+    display: block;
+    width: 100%;
+    margin-top: 10px;
+    padding: 10px 14px;
+
+    background-color: #29496f;
+    color: #ffffff;
+
+    border: 1px solid #3d608a;
+    border-radius: 8px;
+
+    font-size: 0.9rem;
+    font-weight: 600;
+    font-family: inherit;
+
+    cursor: pointer;
+    transition: background-color 0.2s ease,
+                transform 0.2s ease;
+}
+
+.buy-ticket-button:hover {
+    background-color: #365d8b;
+    transform: translateY(-1px);
+}
+
+.buy-ticket-button:focus-visible {
+    outline: 2px solid #7db5ff;
+    outline-offset: 3px;
+}
+
+
+.confirm-purchase-button {
+    display: block;
+    width: 100%;
+    margin-top: 10px;
+    padding: 10px 14px;
+    background-color: #29496f;
+    color: #ffffff;
+    border: 1px solid #3d608a;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.confirm-purchase-button:hover {
+    background-color: #365d8b;
+    transform: translateY(-1px);
+}
+
+.confirm-purchase-button:focus-visible {
+    outline: 2px solid #7db5ff;
+    outline-offset: 3px;
+}
+
+
+/* Seleccionador de horarios en el carrito */
+#cartContent label {
+    display: block;
+    margin: 18px 0 8px;
+    color: #e5eaf2;
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+#showtimeSelect {
+    display: block;
+    width: 100%;
+    padding: 12px 14px;
+    margin-bottom: 18px;
+
+    background-color: #172438;
+    color: #ffffff;
+
+    border: 1px solid #3d608a;
+    border-radius: 8px;
+
+    font-family: inherit;
+    font-size: 0.95rem;
+
+    cursor: pointer;
+    outline: none;
+    transition: border-color 0.2s ease,
+                box-shadow 0.2s ease;
+}
+
+#showtimeSelect:hover {
+    border-color: #7098c9;
+}
+
+#showtimeSelect:focus {
+    border-color: #7db5ff;
+    box-shadow: 0 0 0 3px rgba(125, 181, 255, 0.15);
+}
+
+#showtimeSelect option {
+    background-color: #172438;
+    color: #ffffff;
+}
+
+
+.ticket-price,
+.ticket-total {
+    margin: 16px 0;
+    color: #e5eaf2;
+}
+
+.ticket-price strong {
+    color: #ffffff;
+}
+
+.ticket-quantity input {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 8px;
+    padding: 12px 14px;
+    background-color: #172438;
+    color: #ffffff;
+    border: 1px solid #3d608a;
+    border-radius: 8px;
+    font: inherit;
+}
+
+.ticket-quantity input:focus {
+    outline: 2px solid #7db5ff;
+    outline-offset: 2px;
+}
+
+.ticket-total strong {
+    color: #7db5ff;
+    font-size: 1.2rem;
+}
+
+
+.cart-message {
+    margin-top: 16px;
+    padding: 12px 14px;
+    border: 1px solid #3d608a;
+    border-radius: 8px;
+    background-color: #172438;
+    color: #e5eaf2;
+    font-size: 0.92rem;
+    line-height: 1.5;
+}
+
+.cart-message.success {
+    border-color: #3b8a70;
+    color: #a8f0d0;
+}
+
+.cart-message.error {
+    border-color: #a94c5b;
+    color: #ffb8c1;
+}
+
+
+/* Botón para cancelar la compra */
+.cancel-purchase-button {
+    display: block;
+    width: 100%;
+    margin-top: 10px;
+    padding: 10px 14px;
+    background-color: transparent;
+    color: #aebbd0;
+    border: 1px solid #3d4d63;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    font-family: inherit;
+    cursor: pointer;
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.cancel-purchase-button:hover {
+    background-color: #253247;
+    color: #ffffff;
+    border-color: #60748f;
+}
+
+.cancel-purchase-button:focus-visible {
+    outline: 2px solid #7db5ff;
+    outline-offset: 3px;
+}
